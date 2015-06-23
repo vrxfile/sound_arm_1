@@ -1,0 +1,1 @@
+/home/vrxfile/trik/sound_dsp_1/trik_vidtranscode_cv.h
