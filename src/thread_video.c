@@ -237,7 +237,7 @@ static int threadVideoSelectLoop(Runtime* _runtime, CodecEngine* _ce, FBOutput* 
   char buffer1[FrameSourceSize]; // Buffer with image
 
   //uint32_t ncount = FrameSourceSize / (MAX_FRAMES * nchan * 2);
-  uint32_t ncount = 4; // x 512 * 2 * 2 = 8192
+  uint32_t ncount = 16; // x 512 * 2 * 2 = 32768
 
   char wav_data[MAX_FRAMES * nchan * 2];
 
