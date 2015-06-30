@@ -1,0 +1,48 @@
+export PATH=/opt/trik-sdk/sysroots/i686-oesdk-linux/usr/bin:/opt/trik-sdk/sysroots/i686-oesdk-linux/usr/bin/armv5te-oe-linux-gnueabi:$PATH
+export PKG_CONFIG_SYSROOT_DIR=/opt/trik-sdk/sysroots/armv5te-oe-linux-gnueabi
+export PKG_CONFIG_PATH=/opt/trik-sdk/sysroots/armv5te-oe-linux-gnueabi/usr/lib/pkgconfig
+export CONFIG_SITE=/opt/trik-sdk/site-config-armv5te-oe-linux-gnueabi
+export CC="arm-oe-linux-gnueabi-gcc  -march=armv5te -marm -mthumb-interwork -lasound --sysroot=/opt/trik-sdk/sysroots/armv5te-oe-linux-gnueabi"
+export CXX="arm-oe-linux-gnueabi-g++  -march=armv5te -marm -mthumb-interwork -lasound --sysroot=/opt/trik-sdk/sysroots/armv5te-oe-linux-gnueabi"
+export CPP="arm-oe-linux-gnueabi-gcc -E  -march=armv5te -marm -mthumb-interwork -lasound --sysroot=/opt/trik-sdk/sysroots/armv5te-oe-linux-gnueabi"
+export AS="arm-oe-linux-gnueabi-as "
+export LD="arm-oe-linux-gnueabi-ld  --sysroot=/opt/trik-sdk/sysroots/armv5te-oe-linux-gnueabi"
+export GDB=arm-oe-linux-gnueabi-gdb
+export STRIP=arm-oe-linux-gnueabi-strip
+export RANLIB=arm-oe-linux-gnueabi-ranlib
+export OBJCOPY=arm-oe-linux-gnueabi-objcopy
+export OBJDUMP=arm-oe-linux-gnueabi-objdump
+export AR=arm-oe-linux-gnueabi-ar
+export NM=arm-oe-linux-gnueabi-nm
+export M4=m4
+export TARGET_PREFIX=arm-oe-linux-gnueabi-
+export CONFIGURE_FLAGS="--target=arm-oe-linux-gnueabi --host=arm-oe-linux-gnueabi --build=i686-linux --with-libtool-sysroot=/opt/trik-sdk/sysroots/armv5te-oe-linux-gnueabi"
+export CFLAGS=" -O2 -pipe -g -feliminate-unused-debug-types"
+export CXXFLAGS=" -O2 -pipe -g -feliminate-unused-debug-types -fpermissive"
+export LDFLAGS="-Wl,-O1 -Wl,--hash-style=gnu -Wl,--as-needed"
+export CPPFLAGS=""
+export OECORE_NATIVE_SYSROOT="/opt/trik-sdk/sysroots/i686-oesdk-linux"
+export OECORE_TARGET_SYSROOT="/opt/trik-sdk/sysroots/armv5te-oe-linux-gnueabi"
+export OECORE_ACLOCAL_OPTS="-I /opt/trik-sdk/sysroots/i686-oesdk-linux/usr/share/aclocal"
+export OECORE_DISTRO_VERSION="oe-core.0"
+export OECORE_SDK_VERSION="oe-core.0"
+export PYTHONHOME=/opt/trik-sdk/sysroots/i686-oesdk-linux/usr
+export ARCH=arm
+export CROSS_COMPILE=arm-oe-linux-gnueabi-
+export OE_QMAKE_CFLAGS="$CFLAGS"
+export OE_QMAKE_CXXFLAGS="$CXXFLAGS"
+export OE_QMAKE_LDFLAGS="$LDFLAGS"
+export OE_QMAKE_CC=$CC
+export OE_QMAKE_CXX=$CXX
+export OE_QMAKE_LINK=$CXX
+export OE_QMAKE_AR=$AR
+export OE_QMAKE_LIBDIR_QT=/opt/trik-sdk/sysroots/armv5te-oe-linux-gnueabi//usr/lib
+export OE_QMAKE_INCDIR_QT=/opt/trik-sdk/sysroots/armv5te-oe-linux-gnueabi//usr/include/qtopia
+export OE_QMAKE_MOC=/opt/trik-sdk/sysroots/i686-oesdk-linux/usr/bin/moc4
+export OE_QMAKE_UIC=/opt/trik-sdk/sysroots/i686-oesdk-linux/usr/bin/uic4
+export OE_QMAKE_UIC3=/opt/trik-sdk/sysroots/i686-oesdk-linux/usr/bin/uic34
+export OE_QMAKE_RCC=/opt/trik-sdk/sysroots/i686-oesdk-linux/usr/bin/rcc4
+export OE_QMAKE_QDBUSCPP2XML=/opt/trik-sdk/sysroots/i686-oesdk-linux/usr/bin/qdbuscpp2xml4
+export OE_QMAKE_QDBUSXML2CPP=/opt/trik-sdk/sysroots/i686-oesdk-linux/usr/bin/qdbusxml2cpp4
+export OE_QMAKE_QT_CONFIG=/opt/trik-sdk/sysroots/armv5te-oe-linux-gnueabi//usr/share/qtopia/mkspecs/qconfig.pri
+export QMAKESPEC=/opt/trik-sdk/sysroots/armv5te-oe-linux-gnueabi//usr/share/qtopia/mkspecs/linux-g++

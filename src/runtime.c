@@ -11,19 +11,13 @@
 #include "internal/thread_input.h"
 #include "internal/thread_video.h"
 
-
-
-
 static const RuntimeConfig s_runtimeConfig = {
   .m_verbose = false,
   .m_codecEngineConfig = { "dsp_server.xe674", "vidtranscode_cv" },
   .m_v4l2Config        = { "/dev/video0", 320, 240, V4L2_PIX_FMT_YUYV },
   .m_fbConfig          = { "/dev/fb0" },
-  .m_rcConfig          = { "/run/object-sensor.in.fifo", "/run/object-sensor.out.fifo", true }
+  .m_rcConfig          = { "/run/sound-sensor.in.fifo", "/run/sound-sensor.out.fifo", true }
 };
-
-
-
 
 void runtimeReset(Runtime* _runtime)
 {
@@ -47,9 +41,6 @@ void runtimeReset(Runtime* _runtime)
   memset(&_runtime->m_state.m_targetDetectParams,  0, sizeof(_runtime->m_state.m_targetDetectParams));
   memset(&_runtime->m_state.m_targetDetectCommand, 0, sizeof(_runtime->m_state.m_targetDetectCommand));
 }
-
-
-
 
 bool runtimeParseArgs(Runtime* _runtime, int _argc, char* const _argv[])
 {
@@ -131,9 +122,6 @@ bool runtimeParseArgs(Runtime* _runtime, int _argc, char* const _argv[])
   return true;
 }
 
-
-
-
 void runtimeArgsHelpMessage(Runtime* _runtime, const char* _arg0)
 {
   if (_runtime == NULL)
@@ -156,9 +144,6 @@ void runtimeArgsHelpMessage(Runtime* _runtime, const char* _arg0)
                   "   --help\n",
           _arg0);
 }
-
-
-
 
 int runtimeInit(Runtime* _runtime)
 {
@@ -198,9 +183,6 @@ int runtimeInit(Runtime* _runtime)
   return exit_code;
 }
 
-
-
-
 int runtimeFini(Runtime* _runtime)
 {
   int res;
@@ -222,9 +204,6 @@ int runtimeFini(Runtime* _runtime)
 
   return 0;
 }
-
-
-
 
 int runtimeStart(Runtime* _runtime)
 {
@@ -270,9 +249,6 @@ int runtimeStart(Runtime* _runtime)
   return exit_code;
 }
 
-
-
-
 int runtimeStop(Runtime* _runtime)
 {
   RuntimeThreads* rt;
@@ -288,9 +264,6 @@ int runtimeStop(Runtime* _runtime)
 
   return 0;
 }
-
-
-
 
 bool runtimeCfgVerbose(const Runtime* _runtime)
 {
@@ -332,9 +305,6 @@ const RCConfig* runtimeCfgRCInput(const Runtime* _runtime)
   return &_runtime->m_config.m_rcConfig;
 }
 
-
-
-
 CodecEngine* runtimeModCodecEngine(Runtime* _runtime)
 {
   if (_runtime == NULL)
@@ -366,9 +336,6 @@ RCInput* runtimeModRCInput(Runtime* _runtime)
 
   return &_runtime->m_modules.m_rcInput;
 }
-
-
-
 
 bool runtimeGetTerminate(Runtime* _runtime)
 {

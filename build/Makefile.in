@@ -50,7 +50,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-bin_PROGRAMS = rover-cv$(EXEEXT)
+bin_PROGRAMS = rostik_sound$(EXEEXT)
 subdir = build
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in \
 	$(top_srcdir)/depcomp
@@ -67,13 +67,14 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_rover_cv_OBJECTS = main.$(OBJEXT) module_ce.$(OBJEXT) \
+am_rostik_sound_OBJECTS = main.$(OBJEXT) module_ce.$(OBJEXT) \
 	module_fb.$(OBJEXT) module_rc.$(OBJEXT) module_v4l2.$(OBJEXT) \
 	runtime.$(OBJEXT) thread_input.$(OBJEXT) \
 	thread_video.$(OBJEXT)
-nodist_rover_cv_OBJECTS =
-rover_cv_OBJECTS = $(am_rover_cv_OBJECTS) $(nodist_rover_cv_OBJECTS)
-rover_cv_LDADD = $(LDADD)
+nodist_rostik_sound_OBJECTS =
+rostik_sound_OBJECTS = $(am_rostik_sound_OBJECTS) \
+	$(nodist_rostik_sound_OBJECTS)
+rostik_sound_LDADD = $(LDADD)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -87,8 +88,8 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(rover_cv_SOURCES) $(nodist_rover_cv_SOURCES)
-DIST_SOURCES = $(rover_cv_SOURCES)
+SOURCES = $(rostik_sound_SOURCES) $(nodist_rostik_sound_SOURCES)
+DIST_SOURCES = $(rostik_sound_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -223,8 +224,8 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AM_CPPFLAGS = -I$(top_srcdir)/include -Wall -Wextra
 AM_CXXFLAGS = -Weffc++
-nodist_rover_cv_SOURCES = $(top_srcdir)/config.h
-rover_cv_SOURCES = $(top_srcdir)/src/main.c \
+nodist_rostik_sound_SOURCES = $(top_srcdir)/config.h
+rostik_sound_SOURCES = $(top_srcdir)/src/main.c \
 			  $(top_srcdir)/src/module_ce.c \
 			  $(top_srcdir)/src/module_fb.c \
 			  $(top_srcdir)/src/module_rc.c \
@@ -313,9 +314,9 @@ clean-binPROGRAMS:
 	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
 	echo " rm -f" $$list; \
 	rm -f $$list
-rover-cv$(EXEEXT): $(rover_cv_OBJECTS) $(rover_cv_DEPENDENCIES) $(EXTRA_rover_cv_DEPENDENCIES) 
-	@rm -f rover-cv$(EXEEXT)
-	$(LINK) $(rover_cv_OBJECTS) $(rover_cv_LDADD) $(LIBS)
+rostik_sound$(EXEEXT): $(rostik_sound_OBJECTS) $(rostik_sound_DEPENDENCIES) $(EXTRA_rostik_sound_DEPENDENCIES) 
+	@rm -f rostik_sound$(EXEEXT)
+	$(LINK) $(rostik_sound_OBJECTS) $(rostik_sound_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)

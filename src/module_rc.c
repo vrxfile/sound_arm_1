@@ -16,9 +16,6 @@
 
 #include "internal/module_rc.h"
 
-
-
-
 static int do_openFifoInput(RCInput* _rc, const char* _fifoInputName)
 {
   int res;
@@ -119,7 +116,6 @@ static int do_reopenFifoInput(RCInput* _rc)
   return 0;
 }
 
-
 static int do_openFifoOutput(RCInput* _rc, const char* _fifoOutputName)
 {
   int res;
@@ -209,7 +205,6 @@ static int do_closeFifoOutput(RCInput* _rc)
   return exit_code;
 }
 
-
 static int do_startTargetDetectParams(RCInput* _rc)
 {
   if (_rc == NULL)
@@ -231,7 +226,6 @@ static int do_stopTargetDetectParams(RCInput* _rc)
 
   return 0;
 }
-
 
 static int do_readFifoInput(RCInput* _rc)
 {
@@ -289,11 +283,12 @@ static int do_readFifoInput(RCInput* _rc)
       _rc->m_targetDetectCommand = 1;
       _rc->m_targetDetectCommandUpdated = true;
     }
-    else if (strncmp(parseAt, "hsv ", strlen("hsv ")) == 0)
+    else if (strncmp(parseAt, "inparam ", strlen("inparam ")) == 0)
     {
-      int hue, hueTol, sat, satTol, val, valTol;
-      parseAt += strlen("hsv ");
+      int hue, hueTol, sat, satTol, val, valTol, inParam;
+      parseAt += strlen("inparam ");
 
+      /*
       if ((sscanf(parseAt, "%d %d %d %d %d %d", &hue, &hueTol, &sat, &satTol, &val, &valTol)) != 6)
         fprintf(stderr, "Cannot parse hsv command, args '%s'\n", parseAt);
       else
@@ -306,6 +301,14 @@ static int do_readFifoInput(RCInput* _rc)
         _rc->m_targetDetectValTolerance = valTol;
         _rc->m_targetDetectParamsUpdated = true;
       }
+      */
+      if ((sscanf(parseAt, "%d", &inParam)) != 1)
+        fprintf(stderr, "Cannot parse hsv command, args '%s'\n", parseAt);
+      else
+      {
+        _rc->m_inParam      		    = inParam;
+      }
+
     }
     else if (strncmp(parseAt, "video_out ", strlen("video_out ")) == 0)
     {
@@ -331,7 +334,6 @@ static int do_readFifoInput(RCInput* _rc)
 
   return 0;
 }
-
 
 int rcInputInit(bool _verbose)
 {
@@ -428,7 +430,6 @@ int rcInputReadFifoInput(RCInput* _rc)
   return 0;
 }
 
-
 int rcInputGetTargetDetectParams(RCInput* _rc,
                                  TargetDetectParams* _targetDetectParams)
 {
@@ -439,16 +440,18 @@ int rcInputGetTargetDetectParams(RCInput* _rc,
     return ENODATA;
 
   _rc->m_targetDetectParamsUpdated = false;
+/*
   _targetDetectParams->m_detectHue          = _rc->m_targetDetectHue;
   _targetDetectParams->m_detectHueTolerance = _rc->m_targetDetectHueTolerance;
   _targetDetectParams->m_detectSat          = _rc->m_targetDetectSat;
   _targetDetectParams->m_detectSatTolerance = _rc->m_targetDetectSatTolerance;
   _targetDetectParams->m_detectVal          = _rc->m_targetDetectVal;
   _targetDetectParams->m_detectValTolerance = _rc->m_targetDetectValTolerance;
+*/
+  _targetDetectParams->m_empty 				= _rc->m_inParam;
 
   return 0;
 }
-
 
 int rcInputGetVideoOutParams(RCInput* _rc,
                              bool *_videoOutEnable)
@@ -483,7 +486,16 @@ int rcInputUnsafeReportTargetLocation(RCInput* _rc, const TargetLocation* _targe
     return EINVAL;
 
   if (!_rc->m_fifoOutputFd != -1)
-    dprintf(_rc->m_fifoOutputFd, "loc: %d %d %d\n", _targetLocation->m_targetX, _targetLocation->m_targetY, _targetLocation->m_targetSize);
+  {
+    /*
+	 dprintf(_rc->m_fifoOutputFd, "loc: %d %d %d\n",
+    		_targetLocation->m_targetX,
+    		_targetLocation->m_targetY,
+    		_targetLocation->m_targetSize);
+    */
+	dprintf(_rc->m_fifoOutputFd, "angle: %d\n",
+			_targetLocation->m_targetAngle);
+  }
 
   return 0;
 }
@@ -495,10 +507,15 @@ int rcInputUnsafeReportTargetDetectParams(RCInput* _rc, const TargetDetectParams
     return EINVAL;
 
   if (!_rc->m_fifoOutputFd != -1)
-    dprintf(_rc->m_fifoOutputFd, "hsv: %d %d %d %d %d %d\n",
+  {
+	  /*
+	  dprintf(_rc->m_fifoOutputFd, "hsv: %d %d %d %d %d %d\n",
             _targetDetectParams->m_detectHue, _targetDetectParams->m_detectHueTolerance,
             _targetDetectParams->m_detectSat, _targetDetectParams->m_detectSatTolerance,
             _targetDetectParams->m_detectVal, _targetDetectParams->m_detectValTolerance);
+       */
+	  dprintf(_rc->m_fifoOutputFd, "NULL\n");
+  }
 
   return 0;
 }

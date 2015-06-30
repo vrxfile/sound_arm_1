@@ -1,10 +1,10 @@
 AM_CPPFLAGS		= -I$(top_srcdir)/include -Wall -Wextra
 AM_CXXFLAGS		= -Weffc++
 
-bin_PROGRAMS		= rover-cv
-nodist_rover_cv_SOURCES	= $(top_srcdir)/config.h
+bin_PROGRAMS		= rostik_sound
+nodist_rostik_sound_SOURCES	= $(top_srcdir)/config.h
 
-rover_cv_SOURCES	= $(top_srcdir)/src/main.c \
+rostik_sound_SOURCES	= $(top_srcdir)/src/main.c \
 			  $(top_srcdir)/src/module_ce.c \
 			  $(top_srcdir)/src/module_fb.c \
 			  $(top_srcdir)/src/module_rc.c \

@@ -217,6 +217,7 @@ static int do_transcodeFrame(CodecEngine* _ce,
   tcInArgs.base.size = sizeof(tcInArgs);
   tcInArgs.base.numBytes = _srcFrameSize;
   tcInArgs.base.inputID = 1; // must be non-zero, otherwise caching issues appear
+  /*
   tcInArgs.alg.detectHueFrom = makeValueWrap( _targetDetectParams->m_detectHue, -_targetDetectParams->m_detectHueTolerance, 0, 359);
   tcInArgs.alg.detectHueTo   = makeValueWrap( _targetDetectParams->m_detectHue, +_targetDetectParams->m_detectHueTolerance, 0, 359);
   tcInArgs.alg.detectSatFrom = makeValueRange(_targetDetectParams->m_detectSat, -_targetDetectParams->m_detectSatTolerance, 0, 100);
@@ -224,6 +225,8 @@ static int do_transcodeFrame(CodecEngine* _ce,
   tcInArgs.alg.detectValFrom = makeValueRange(_targetDetectParams->m_detectVal, -_targetDetectParams->m_detectValTolerance, 0, 100);
   tcInArgs.alg.detectValTo   = makeValueRange(_targetDetectParams->m_detectVal, +_targetDetectParams->m_detectValTolerance, 0, 100);
   tcInArgs.alg.autoDetectHsv = _targetDetectCommand->m_cmd;
+  */
+  tcInArgs.alg.inBoolParam = _targetDetectCommand->m_cmd;
 
   TRIK_VIDTRANSCODE_CV_OutArgs tcOutArgs;
   memset(&tcOutArgs,    0, sizeof(tcOutArgs));
@@ -279,6 +282,7 @@ static int do_transcodeFrame(CodecEngine* _ce,
   if(_ce->m_videoOutEnable)
     memcpy(_dstFramePtr, _ce->m_dstBuffer, *_dstFrameUsed);
 
+  /*
   _targetLocation->m_targetX    = tcOutArgs.alg.targetX;
   _targetLocation->m_targetY    = tcOutArgs.alg.targetY;
   _targetLocation->m_targetSize = tcOutArgs.alg.targetSize;
@@ -289,6 +293,9 @@ static int do_transcodeFrame(CodecEngine* _ce,
   _targetDetectParamsResult->m_detectSatTolerance = tcOutArgs.alg.detectSatTolerance;
   _targetDetectParamsResult->m_detectVal          = tcOutArgs.alg.detectVal;
   _targetDetectParamsResult->m_detectValTolerance = tcOutArgs.alg.detectValTolerance;
+  */
+  _targetLocation->m_detectFlag    = tcOutArgs.alg.detectFlag;
+  _targetLocation->m_targetAngle    = tcOutArgs.alg.targetAngle;
 
   return 0;
 }
@@ -470,11 +477,11 @@ int codecEngineTranscodeFrame(CodecEngine* _ce,
   {
     fprintf(stderr, "Transcoded frame %p[%zu] -> %p[%zu/%zu]\n",
             _srcFramePtr, _srcFrameSize, _dstFramePtr, _dstFrameSize, *_dstFrameUsed);
-    if (_targetLocation->m_targetSize > 0)
-      fprintf(stderr, "Target detected at %d x %d @ %d\n",
-              _targetLocation->m_targetX,
-              _targetLocation->m_targetY,
-              _targetLocation->m_targetSize);
+    if (_targetLocation->m_detectFlag)
+    {
+      fprintf(stderr, "Sound target detected at %d angle\n",
+              _targetLocation->m_targetAngle);
+    }
   }
 
   return res;
