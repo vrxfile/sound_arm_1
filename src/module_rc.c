@@ -493,7 +493,8 @@ int rcInputUnsafeReportTargetLocation(RCInput* _rc, const TargetLocation* _targe
     		_targetLocation->m_targetY,
     		_targetLocation->m_targetSize);
     */
-	dprintf(_rc->m_fifoOutputFd, "angle: %d\n",
+	dprintf(_rc->m_fifoOutputFd, "angle: %d %d\n",
+			_targetLocation->m_detectFlag,
 			_targetLocation->m_targetAngle);
   }
 
