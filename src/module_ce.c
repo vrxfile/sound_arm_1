@@ -294,8 +294,10 @@ static int do_transcodeFrame(CodecEngine* _ce,
   _targetDetectParamsResult->m_detectVal          = tcOutArgs.alg.detectVal;
   _targetDetectParamsResult->m_detectValTolerance = tcOutArgs.alg.detectValTolerance;
   */
-  _targetLocation->m_detectFlag    = tcOutArgs.alg.detectFlag;
-  _targetLocation->m_targetAngle    = tcOutArgs.alg.targetAngle;
+
+  _targetLocation->m_targetAngle    			= tcOutArgs.alg.targetAngle;
+  _targetLocation->m_targetLeftVolume			= tcOutArgs.alg.targetLeftVolume;
+  _targetLocation->m_targetRightVolume			= tcOutArgs.alg.targetRightVolume;
 
   return 0;
 }
@@ -339,9 +341,6 @@ static int do_reportLoad(const CodecEngine* _ce, long long _ms)
   return 0;
 }
 
-
-
-
 int codecEngineInit(bool _verbose)
 {
   CERuntime_init(); /* init Codec Engine */
@@ -360,7 +359,6 @@ int codecEngineFini()
 {
   return 0;
 }
-
 
 int codecEngineOpen(CodecEngine* _ce, const CodecEngineConfig* _config)
 {
@@ -408,7 +406,6 @@ int codecEngineClose(CodecEngine* _ce)
 
   return 0;
 }
-
 
 int codecEngineStart(CodecEngine* _ce, const CodecEngineConfig* _config,
                      const ImageDescription* _srcImageDesc,
@@ -477,11 +474,13 @@ int codecEngineTranscodeFrame(CodecEngine* _ce,
   {
     fprintf(stderr, "Transcoded frame %p[%zu] -> %p[%zu/%zu]\n",
             _srcFramePtr, _srcFrameSize, _dstFramePtr, _dstFrameSize, *_dstFrameUsed);
+    /*
     if (_targetLocation->m_detectFlag)
     {
       fprintf(stderr, "Sound target detected at %d angle\n",
               _targetLocation->m_targetAngle);
     }
+    */
   }
 
   return res;

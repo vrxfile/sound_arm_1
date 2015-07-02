@@ -38,8 +38,9 @@ typedef struct TargetDetectCommand
 
 typedef struct TargetLocation
 {
-	int m_detectFlag;
 	int m_targetAngle;
+	unsigned int m_targetLeftVolume;
+	unsigned int m_targetRightVolume;
 	/*
 	int m_targetX;
 	int m_targetY;

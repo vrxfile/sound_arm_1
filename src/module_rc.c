@@ -493,9 +493,10 @@ int rcInputUnsafeReportTargetLocation(RCInput* _rc, const TargetLocation* _targe
     		_targetLocation->m_targetY,
     		_targetLocation->m_targetSize);
     */
-	dprintf(_rc->m_fifoOutputFd, "angle: %d %d\n",
-			_targetLocation->m_detectFlag,
-			_targetLocation->m_targetAngle);
+	dprintf(_rc->m_fifoOutputFd, "sound: %d %d %d\n",
+			_targetLocation->m_targetAngle,
+			_targetLocation->m_targetLeftVolume,
+			_targetLocation->m_targetRightVolume);
   }
 
   return 0;
