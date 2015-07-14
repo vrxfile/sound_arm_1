@@ -283,10 +283,11 @@ static int do_readFifoInput(RCInput* _rc)
       _rc->m_targetDetectCommand = 1;
       _rc->m_targetDetectCommandUpdated = true;
     }
-    else if (strncmp(parseAt, "inparam ", strlen("inparam ")) == 0)
+    else if (strncmp(parseAt, "volcoeff ", strlen("volcoeff ")) == 0)
     {
-      int hue, hueTol, sat, satTol, val, valTol, inParam;
-      parseAt += strlen("inparam ");
+      //int hue, hueTol, sat, satTol, val, valTol, inParam;
+      int volCoeff; 					// Input parameter (volume coefficient (%))
+      parseAt += strlen("volcoeff ");
 
       /*
       if ((sscanf(parseAt, "%d %d %d %d %d %d", &hue, &hueTol, &sat, &satTol, &val, &valTol)) != 6)
@@ -302,11 +303,11 @@ static int do_readFifoInput(RCInput* _rc)
         _rc->m_targetDetectParamsUpdated = true;
       }
       */
-      if ((sscanf(parseAt, "%d", &inParam)) != 1)
-        fprintf(stderr, "Cannot parse hsv command, args '%s'\n", parseAt);
+      if ((sscanf(parseAt, "%d", &volCoeff)) != 1)
+        fprintf(stderr, "Cannot parse volcoeff command, args '%s'\n", parseAt);
       else
       {
-        _rc->m_inParam      		    = inParam;
+        _rc->m_volumeCoefficient     		    = volCoeff;
       }
 
     }
@@ -448,7 +449,7 @@ int rcInputGetTargetDetectParams(RCInput* _rc,
   _targetDetectParams->m_detectVal          = _rc->m_targetDetectVal;
   _targetDetectParams->m_detectValTolerance = _rc->m_targetDetectValTolerance;
 */
-  _targetDetectParams->m_empty 				= _rc->m_inParam;
+  _targetDetectParams->m_volumeCoefficient 				= _rc->m_volumeCoefficient;
 
   return 0;
 }

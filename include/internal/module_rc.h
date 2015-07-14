@@ -37,7 +37,7 @@ typedef struct RCInput
   int                      m_targetDetectVal;
   int                      m_targetDetectValTolerance;
 */
-  int						m_inParam;
+  int						m_volumeCoefficient;
 
   bool                     m_targetDetectCommandUpdated;
   int                      m_targetDetectCommand;

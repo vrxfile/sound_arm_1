@@ -20,7 +20,7 @@ typedef struct ImageDescription
 
 typedef struct TargetDetectParams
 {
-	int m_empty;
+	int m_volumeCoefficient;
 	/*
 	int m_detectHue;
 	int m_detectHueTolerance;
