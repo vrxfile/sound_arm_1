@@ -227,6 +227,8 @@ static int do_transcodeFrame(CodecEngine* _ce,
   tcInArgs.alg.autoDetectHsv = _targetDetectCommand->m_cmd;
   */
   tcInArgs.alg.volumeCoefficient = _targetDetectParams->m_volumeCoefficient;
+  //fprintf(stderr, "volCoeff1 = %d\n", _targetDetectParams->m_volumeCoefficient);
+  //fprintf(stderr, "volCoeff2 = %d\n", tcInArgs.alg.volumeCoefficient);
 
   TRIK_VIDTRANSCODE_CV_OutArgs tcOutArgs;
   memset(&tcOutArgs,    0, sizeof(tcOutArgs));

@@ -308,6 +308,8 @@ static int do_readFifoInput(RCInput* _rc)
       else
       {
         _rc->m_volumeCoefficient     		    = volCoeff;
+        _rc->m_targetDetectParamsUpdated = true;
+        //fprintf(stderr, "volCoeff = %d\n", volCoeff);
       }
 
     }
@@ -450,6 +452,8 @@ int rcInputGetTargetDetectParams(RCInput* _rc,
   _targetDetectParams->m_detectValTolerance = _rc->m_targetDetectValTolerance;
 */
   _targetDetectParams->m_volumeCoefficient 				= _rc->m_volumeCoefficient;
+  //fprintf(stderr, "volCoeff3 = %d\n", _targetDetectParams->m_volumeCoefficient);
+  //fprintf(stderr, "volCoeff4 = %d\n", _rc->m_volumeCoefficient);
 
   return 0;
 }
