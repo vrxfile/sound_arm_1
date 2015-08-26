@@ -9,7 +9,7 @@
 
 #include "internal/runtime.h"
 #include "internal/thread_input.h"
-#include "internal/thread_video.h"
+#include "internal/thread_audio.h"
 
 static const RuntimeConfig s_runtimeConfig = {
   .m_verbose = false,

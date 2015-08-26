@@ -11,7 +11,7 @@ rostik_sound_SOURCES	= $(top_srcdir)/src/main.c \
 			  $(top_srcdir)/src/module_v4l2.c \
 			  $(top_srcdir)/src/runtime.c \
 			  $(top_srcdir)/src/thread_input.c \
-			  $(top_srcdir)/src/thread_video.c
+			  $(top_srcdir)/src/thread_audio.c
 
 
 #TESTS			= test-xxx

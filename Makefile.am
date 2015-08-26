@@ -7,7 +7,7 @@ noinst_HEADERS		= include/internal/common.h \
 			  include/internal/module_v4l2.h \
 			  include/internal/runtime.h \
 			  include/internal/thread_input.h \
-			  include/internal/thread_video.h
+			  include/internal/thread_audio.h
 
 
 SUBDIRS			= build

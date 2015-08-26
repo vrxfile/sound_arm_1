@@ -9,7 +9,7 @@
 #include <sys/select.h>
 #include <alsa/asoundlib.h>
 
-#include "internal/thread_video.h"
+#include "internal/thread_audio.h"
 #include "internal/runtime.h"
 #include "internal/module_ce.h"
 #include "internal/module_fb.h"
@@ -32,7 +32,7 @@
 #define SNDREAD_ERROR	12
 #define START_ERROR		13
 
-#define MAX_FRAMES		512
+#define SND_BUF_SIZE	512
 
 static char* snd_device = "default";
 snd_pcm_t* capture_handle;
@@ -122,84 +122,15 @@ int init_soundcard()
 		return PREPARE_ERROR;
 	}
 
-	  //fprintf(stderr, "Capture handle1: %x\n", capture_handle);
-	  //fprintf(stderr, "Capture state1: %d\n", snd_pcm_state(capture_handle));
-
-	  // Start reading data from sound card
-	  if ((err = snd_pcm_start(capture_handle)) < 0)
-	  {
-		  fprintf(stderr, "cannot start soundcard (%s, %d)\n", snd_strerror(err),
-				  err);
-		  return START_ERROR;
-	  }
-
-	  //fprintf(stderr, "Capture handle2: %x\n", capture_handle);
-	  //fprintf(stderr, "Capture state2: %d\n", snd_pcm_state(capture_handle));
-
-	/*
-	fprintf(stderr, "%s\n", "Parameters of PCM:");
-	fprintf(stderr, "%x\n", capture_handle);
-	fprintf(stderr, "%s\n", snd_pcm_name(capture_handle));
-	fprintf(stderr, "%d\n", snd_pcm_type(capture_handle));
-	fprintf(stderr, "%d\n", snd_pcm_stream(capture_handle));
-	fprintf(stderr, "%d\n", snd_pcm_poll_descriptors_count(capture_handle));
-	fprintf(stderr, "%d\n", snd_pcm_state(capture_handle));
-	fprintf(stderr, "%d\n", snd_pcm_avail(capture_handle));
-	fprintf(stderr, "%d\n", snd_pcm_avail_update(capture_handle));
-	fprintf(stderr, "%d\n", snd_pcm_rewindable(capture_handle));
-	fprintf(stderr, "%d\n", snd_pcm_forwardable(capture_handle));
-	fprintf(stderr, "%s\n", "-------------------------------------");
-	fprintf(stderr, "%d\n", snd_pcm_info_malloc(&s_info));
-	fprintf(stderr, "%d\n", snd_pcm_info(capture_handle, s_info));
-	fprintf(stderr, "%d\n", snd_pcm_info_get_device(s_info));
-	fprintf(stderr, "%d\n", snd_pcm_info_get_subdevice(s_info));
-	fprintf(stderr, "%d\n", snd_pcm_info_get_stream(s_info));
-	fprintf(stderr, "%d\n", snd_pcm_info_get_card(s_info));
-	fprintf(stderr, "%s\n", snd_pcm_info_get_id(s_info));
-	fprintf(stderr, "%s\n", snd_pcm_info_get_name(s_info));
-	fprintf(stderr, "%s\n", snd_pcm_info_get_subdevice_name(s_info));
-	fprintf(stderr, "%d\n", snd_pcm_info_get_class(s_info));
-	fprintf(stderr, "%d\n", snd_pcm_info_get_subclass(s_info));
-	fprintf(stderr, "%d\n", snd_pcm_info_get_subdevices_count(s_info));
-	fprintf(stderr, "%d\n", snd_pcm_info_get_subdevices_avail(s_info));
-	fprintf(stderr, "%s\n", "-------------------------------------");
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_current(capture_handle, hw_params));
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_is_double(hw_params));
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_is_batch(hw_params));
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_is_block_transfer(hw_params));
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_is_monotonic(hw_params));
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_can_overrange(hw_params));
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_can_pause(hw_params));
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_can_resume(hw_params));
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_is_half_duplex(hw_params));
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_is_joint_duplex(hw_params));
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_can_sync_start(hw_params));
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_can_disable_period_wakeup(hw_params));
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_get_sbits(hw_params));
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_get_fifo_size(hw_params));
-	fprintf(stderr, "%s\n", "-------------------------------------");
-	unsigned int *tmp1 = (unsigned int *)malloc(sizeof(unsigned int));
-	int *tmp2 = (int *)malloc(sizeof(int));
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_get_channels(hw_params, tmp1)); fprintf(stderr, "%d\n", *tmp1);
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_get_channels_min(hw_params, tmp1)); fprintf(stderr, "%d\n", *tmp1);
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_get_channels_max(hw_params, tmp1)); fprintf(stderr, "%d\n", *tmp1);
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_get_rate(hw_params, tmp1, tmp2)); fprintf(stderr, "%d\n", *tmp1 ,  *tmp2);
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_get_rate_min(hw_params, tmp1, tmp2)); fprintf(stderr, "%d\n", *tmp1 ,  *tmp2);
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_get_rate_max(hw_params, tmp1, tmp2)); fprintf(stderr, "%d\n", *tmp1 ,  *tmp2);
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_get_rate_resample(capture_handle, hw_params, tmp1)); fprintf(stderr, "%d\n", *tmp1);
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_get_export_buffer(capture_handle, hw_params, tmp1)); fprintf(stderr, "%d\n", *tmp1);
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_get_period_wakeup(capture_handle, hw_params, tmp1)); fprintf(stderr, "%d\n", *tmp1);
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_get_period_time(hw_params, tmp1, tmp2)); fprintf(stderr, "%d\n", *tmp1 ,  *tmp2);
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_get_period_time_min(hw_params, tmp1, tmp2)); fprintf(stderr, "%d\n", *tmp1 ,  *tmp2);
-	fprintf(stderr, "%d\n", snd_pcm_hw_params_get_period_time_max(hw_params, tmp1, tmp2)); fprintf(stderr, "%d\n", *tmp1 ,  *tmp2);
-	*/
+	// Start reading data from sound card
+	if ((err = snd_pcm_start(capture_handle)) < 0)
+	{
+		fprintf(stderr, "cannot start soundcard (%s, %d)\n", snd_strerror(err),
+				err);
+		return START_ERROR;
+	}
 
 	snd_pcm_hw_params_free(hw_params);
-	/*
-	snd_pcm_info_free(s_info);
-	free(tmp1);
-	free(tmp2);
-	*/
 
 	return NO_ERROR;
 }
@@ -236,10 +167,10 @@ static int threadVideoSelectLoop(Runtime* _runtime, CodecEngine* _ce, FBOutput* 
 
   char buffer1[FrameSourceSize]; // Buffer with image
 
-  //uint32_t ncount = FrameSourceSize / (MAX_FRAMES * nchan * 2);
-  uint32_t ncount = 32; // x 512 * 2 * 2 = 65536
+  //uint32_t ncount = FrameSourceSize / (SND_BUF_SIZE * nchan * 2);
+  uint32_t ncount = 32; // x 512 * 2 * 2 = 65536 - number of readings data from siound card
 
-  char wav_data[MAX_FRAMES * nchan * 2];
+  char wav_data[SND_BUF_SIZE * nchan * 2];
 
   TargetDetectParams  targetDetectParams;
   TargetDetectCommand targetDetectCommand;
@@ -281,10 +212,9 @@ static int threadVideoSelectLoop(Runtime* _runtime, CodecEngine* _ce, FBOutput* 
   memset(buffer1, 0, frameSrcSize);
 
   // Reading data
-  //fprintf(stderr, "%s\n", "Read data");
   for (uint32_t i = 0; i < ncount; i++)
 	{
-		if ((err = snd_pcm_readi(capture_handle, wav_data, MAX_FRAMES)) != MAX_FRAMES)
+		if ((err = snd_pcm_readi(capture_handle, wav_data, SND_BUF_SIZE)) != SND_BUF_SIZE)
 		{
 			fprintf(stderr, "read from audio interface failed (%s, %d)\n",
 					snd_strerror(err), err);
@@ -303,9 +233,9 @@ static int threadVideoSelectLoop(Runtime* _runtime, CodecEngine* _ce, FBOutput* 
 			}
 
 		}
-		for (uint32_t j = 0; j < (MAX_FRAMES * nchan * 2); j++)
+		for (uint32_t j = 0; j < (SND_BUF_SIZE * nchan * 2); j++)
 		{
-			buffer1[i * MAX_FRAMES * nchan * 2 + j] = wav_data[j];
+			buffer1[i * SND_BUF_SIZE * nchan * 2 + j] = wav_data[j];
 		}
 	}
 

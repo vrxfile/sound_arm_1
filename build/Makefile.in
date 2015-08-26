@@ -70,7 +70,7 @@ PROGRAMS = $(bin_PROGRAMS)
 am_rostik_sound_OBJECTS = main.$(OBJEXT) module_ce.$(OBJEXT) \
 	module_fb.$(OBJEXT) module_rc.$(OBJEXT) module_v4l2.$(OBJEXT) \
 	runtime.$(OBJEXT) thread_input.$(OBJEXT) \
-	thread_video.$(OBJEXT)
+	thread_audio.$(OBJEXT)
 nodist_rostik_sound_OBJECTS =
 rostik_sound_OBJECTS = $(am_rostik_sound_OBJECTS) \
 	$(nodist_rostik_sound_OBJECTS)
@@ -232,7 +232,7 @@ rostik_sound_SOURCES = $(top_srcdir)/src/main.c \
 			  $(top_srcdir)/src/module_v4l2.c \
 			  $(top_srcdir)/src/runtime.c \
 			  $(top_srcdir)/src/thread_input.c \
-			  $(top_srcdir)/src/thread_video.c
+			  $(top_srcdir)/src/thread_audio.c
 
 all: all-am
 
@@ -330,8 +330,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/module_rc.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/module_v4l2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/runtime.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/thread_audio.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/thread_input.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/thread_video.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -452,19 +452,19 @@ thread_input.obj: $(top_srcdir)/src/thread_input.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o thread_input.obj `if test -f '$(top_srcdir)/src/thread_input.c'; then $(CYGPATH_W) '$(top_srcdir)/src/thread_input.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/src/thread_input.c'; fi`
 
-thread_video.o: $(top_srcdir)/src/thread_video.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT thread_video.o -MD -MP -MF $(DEPDIR)/thread_video.Tpo -c -o thread_video.o `test -f '$(top_srcdir)/src/thread_video.c' || echo '$(srcdir)/'`$(top_srcdir)/src/thread_video.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/thread_video.Tpo $(DEPDIR)/thread_video.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/src/thread_video.c' object='thread_video.o' libtool=no @AMDEPBACKSLASH@
+thread_audio.o: $(top_srcdir)/src/thread_audio.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT thread_audio.o -MD -MP -MF $(DEPDIR)/thread_audio.Tpo -c -o thread_audio.o `test -f '$(top_srcdir)/src/thread_audio.c' || echo '$(srcdir)/'`$(top_srcdir)/src/thread_audio.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/thread_audio.Tpo $(DEPDIR)/thread_audio.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/src/thread_audio.c' object='thread_audio.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o thread_video.o `test -f '$(top_srcdir)/src/thread_video.c' || echo '$(srcdir)/'`$(top_srcdir)/src/thread_video.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o thread_audio.o `test -f '$(top_srcdir)/src/thread_audio.c' || echo '$(srcdir)/'`$(top_srcdir)/src/thread_audio.c
 
-thread_video.obj: $(top_srcdir)/src/thread_video.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT thread_video.obj -MD -MP -MF $(DEPDIR)/thread_video.Tpo -c -o thread_video.obj `if test -f '$(top_srcdir)/src/thread_video.c'; then $(CYGPATH_W) '$(top_srcdir)/src/thread_video.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/src/thread_video.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/thread_video.Tpo $(DEPDIR)/thread_video.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/src/thread_video.c' object='thread_video.obj' libtool=no @AMDEPBACKSLASH@
+thread_audio.obj: $(top_srcdir)/src/thread_audio.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT thread_audio.obj -MD -MP -MF $(DEPDIR)/thread_audio.Tpo -c -o thread_audio.obj `if test -f '$(top_srcdir)/src/thread_audio.c'; then $(CYGPATH_W) '$(top_srcdir)/src/thread_audio.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/src/thread_audio.c'; fi`
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/thread_audio.Tpo $(DEPDIR)/thread_audio.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='$(top_srcdir)/src/thread_audio.c' object='thread_audio.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o thread_video.obj `if test -f '$(top_srcdir)/src/thread_video.c'; then $(CYGPATH_W) '$(top_srcdir)/src/thread_video.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/src/thread_video.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o thread_audio.obj `if test -f '$(top_srcdir)/src/thread_audio.c'; then $(CYGPATH_W) '$(top_srcdir)/src/thread_audio.c'; else $(CYGPATH_W) '$(srcdir)/$(top_srcdir)/src/thread_audio.c'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo

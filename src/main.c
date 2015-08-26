@@ -32,9 +32,6 @@ static void sigactions_setup()
   signal(SIGPIPE, SIG_IGN);
 }
 
-
-
-
 int main(int _argc, char* const _argv[])
 {
   int res = 0;
