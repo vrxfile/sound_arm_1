@@ -13,6 +13,7 @@
 #include "internal/runtime.h"
 #include "internal/module_ce.h"
 #include "internal/module_fb.h"
+#include "internal/module_rc.h"
 
 #define FrameSourceSize		153600
 #define ImageSourceFormat	1448695129
@@ -165,17 +166,19 @@ static int threadAudioSelectLoop(Runtime* _runtime, CodecEngine* _ce, FBOutput* 
   const void* frameSrcPtr;
   size_t frameSrcSize;
 
-  char buffer1[FrameSourceSize]; // Buffer with image
-
-  //uint32_t ncount = FrameSourceSize / (SND_BUF_SIZE * nchan * 2);
-  uint32_t ncount = 32; // x 512 * 2 * 2 = 65536 - number of readings data from siound card
-
-  char wav_data[SND_BUF_SIZE * nchan * 2];
-
   TargetDetectParams  targetDetectParams;
   TargetDetectCommand targetDetectCommand;
   TargetLocation      targetLocation;
   TargetDetectParams  targetDetectParamsResult;
+
+  char buffer1[FrameSourceSize]; // Buffer with sound wave
+
+  //uint32_t ncount = FrameSourceSize / (SND_BUF_SIZE * nchan * 2);
+  // int ncount = 32; // x SND_BUF_SIZE * nchan * 2bytes = 65536 - number of readings data from sound card
+
+  int n_read_count; // Number of readings data from sound card
+
+  char wav_data[SND_BUF_SIZE * nchan * 2];
 
   if (_runtime == NULL || _ce == NULL || _fb == NULL)
     return EINVAL;
@@ -194,7 +197,7 @@ static int threadAudioSelectLoop(Runtime* _runtime, CodecEngine* _ce, FBOutput* 
 
   if ((res = runtimeFetchTargetDetectCommand(_runtime, &targetDetectCommand)) != 0)
   {
-    fprintf(stderr, "runtimeGetTargetDetectCommand() failed: %d\n", res);
+    fprintf(stderr, "runtimeFetchTargetDetectCommand() failed: %d\n", res);
     return res;
   }
 
@@ -207,12 +210,20 @@ static int threadAudioSelectLoop(Runtime* _runtime, CodecEngine* _ce, FBOutput* 
   size_t frameDstUsed = frameDstSize;
   frameSrcSize = FrameSourceSize;
 
+  if (targetDetectParams.m_numSamples <= FrameSourceSize)
+  {
+	  n_read_count = targetDetectParams.m_numSamples / (SND_BUF_SIZE * nchan * 2);
+  }
+  else
+  {
+	  n_read_count = FrameSourceSize / (SND_BUF_SIZE * nchan * 2);
+  }
 
   // This is a buffer to send to DSP
   memset(buffer1, 0, frameSrcSize);
 
   // Reading data
-  for (uint32_t i = 0; i < ncount; i++)
+  for (int i = 0; i < n_read_count; i++)
 	{
 		if ((err = snd_pcm_readi(capture_handle, wav_data, SND_BUF_SIZE)) != SND_BUF_SIZE)
 		{
@@ -357,7 +368,6 @@ void* threadAudio(void* _arg)
 		exit_code = res;
 		goto exit_fb_stop;
 	}
-
 
 	printf("Open default soundcard\n");
 	init_soundcard();

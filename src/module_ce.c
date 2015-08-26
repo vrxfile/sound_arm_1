@@ -276,19 +276,6 @@ static int do_transcodeFrame(CodecEngine* _ce,
   if(_ce->m_videoOutEnable)
     memcpy(_dstFramePtr, _ce->m_dstBuffer, *_dstFrameUsed);
 
-  /*
-  _targetLocation->m_targetX    = tcOutArgs.alg.targetX;
-  _targetLocation->m_targetY    = tcOutArgs.alg.targetY;
-  _targetLocation->m_targetSize = tcOutArgs.alg.targetSize;
-
-  _targetDetectParamsResult->m_detectHue          = tcOutArgs.alg.detectHue;
-  _targetDetectParamsResult->m_detectHueTolerance = tcOutArgs.alg.detectHueTolerance;
-  _targetDetectParamsResult->m_detectSat          = tcOutArgs.alg.detectSat;
-  _targetDetectParamsResult->m_detectSatTolerance = tcOutArgs.alg.detectSatTolerance;
-  _targetDetectParamsResult->m_detectVal          = tcOutArgs.alg.detectVal;
-  _targetDetectParamsResult->m_detectValTolerance = tcOutArgs.alg.detectValTolerance;
-  */
-
   _targetLocation->m_targetAngle    			= tcOutArgs.alg.targetAngle;
   _targetLocation->m_targetLeftVolume			= tcOutArgs.alg.targetLeftVolume;
   _targetLocation->m_targetRightVolume			= tcOutArgs.alg.targetRightVolume;
