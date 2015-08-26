@@ -224,9 +224,9 @@ int runtimeStart(Runtime* _runtime)
     goto exit;
   }
 
-  if ((res = pthread_create(&rt->m_videoThread, NULL, &threadVideo, _runtime)) != 0)
+  if ((res = pthread_create(&rt->m_videoThread, NULL, &threadAudio, _runtime)) != 0)
   {
-    fprintf(stderr, "pthread_create(video) failed: %d\n", res);
+    fprintf(stderr, "pthread_create(audio) failed: %d\n", res);
     exit_code = res;
     goto exit_join_input_thread;
   }

@@ -15,8 +15,6 @@
 
 #include "internal/module_v4l2.h"
 
-
-
 static int do_v4l2InputOpen(V4L2Input* _v4l2, const char* _path)
 {
   int res;

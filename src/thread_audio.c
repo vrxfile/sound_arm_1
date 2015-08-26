@@ -153,8 +153,8 @@ int InputReportFPS(long long _ms)
 	return 0;
 }
 
-// Video thread loop cycle
-static int threadVideoSelectLoop(Runtime* _runtime, CodecEngine* _ce, FBOutput* _fb)
+// Audio thread loop cycle
+static int threadAudioSelectLoop(Runtime* _runtime, CodecEngine* _ce, FBOutput* _fb)
 {
   int res = 0;
   int err = 0;
@@ -285,8 +285,8 @@ static int threadVideoSelectLoop(Runtime* _runtime, CodecEngine* _ce, FBOutput* 
   return 0;
 }
 
-// Video thread
-void* threadVideo(void* _arg)
+// Audio thread
+void* threadAudio(void* _arg)
 {
 	intptr_t exit_code = 0;
 	Runtime* runtime = (Runtime*)_arg;
@@ -362,7 +362,7 @@ void* threadVideo(void* _arg)
 	printf("Open default soundcard\n");
 	init_soundcard();
 
-	printf("Entering video thread loop\n");
+	printf("Entering audio thread loop\n");
 	while (!runtimeGetTerminate(runtime))
 	{
 		struct timespec now;
@@ -390,14 +390,14 @@ void* threadVideo(void* _arg)
 
 		}
 
-		if ((res = threadVideoSelectLoop(runtime, ce, fb)) != 0)
+		if ((res = threadAudioSelectLoop(runtime, ce, fb)) != 0)
 		{
-			fprintf(stderr, "threadVideoSelectLoop() failed: %d\n", res);
+			fprintf(stderr, "threadAudioSelectLoop() failed: %d\n", res);
 			exit_code = res;
 			goto exit_fb_stop;
 		}
 	}
-	printf("Left video thread loop\n");
+	printf("Left audio thread loop\n");
 
 	exit_fb_stop:
 	if ((res = fbOutputStop(fb)) != 0)
