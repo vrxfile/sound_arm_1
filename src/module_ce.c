@@ -217,18 +217,10 @@ static int do_transcodeFrame(CodecEngine* _ce,
   tcInArgs.base.size = sizeof(tcInArgs);
   tcInArgs.base.numBytes = _srcFrameSize;
   tcInArgs.base.inputID = 1; // must be non-zero, otherwise caching issues appear
-  /*
-  tcInArgs.alg.detectHueFrom = makeValueWrap( _targetDetectParams->m_detectHue, -_targetDetectParams->m_detectHueTolerance, 0, 359);
-  tcInArgs.alg.detectHueTo   = makeValueWrap( _targetDetectParams->m_detectHue, +_targetDetectParams->m_detectHueTolerance, 0, 359);
-  tcInArgs.alg.detectSatFrom = makeValueRange(_targetDetectParams->m_detectSat, -_targetDetectParams->m_detectSatTolerance, 0, 100);
-  tcInArgs.alg.detectSatTo   = makeValueRange(_targetDetectParams->m_detectSat, +_targetDetectParams->m_detectSatTolerance, 0, 100);
-  tcInArgs.alg.detectValFrom = makeValueRange(_targetDetectParams->m_detectVal, -_targetDetectParams->m_detectValTolerance, 0, 100);
-  tcInArgs.alg.detectValTo   = makeValueRange(_targetDetectParams->m_detectVal, +_targetDetectParams->m_detectValTolerance, 0, 100);
-  tcInArgs.alg.autoDetectHsv = _targetDetectCommand->m_cmd;
-  */
   tcInArgs.alg.volumeCoefficient = _targetDetectParams->m_volumeCoefficient;
-  //fprintf(stderr, "volCoeff1 = %d\n", _targetDetectParams->m_volumeCoefficient);
-  //fprintf(stderr, "volCoeff2 = %d\n", tcInArgs.alg.volumeCoefficient);
+  tcInArgs.alg.micDistance = _targetDetectParams->m_micDistance;
+  tcInArgs.alg.windowSize = _targetDetectParams->m_windowSize;
+  tcInArgs.alg.numSamples = _targetDetectParams->m_numSamples;
 
   TRIK_VIDTRANSCODE_CV_OutArgs tcOutArgs;
   memset(&tcOutArgs,    0, sizeof(tcOutArgs));

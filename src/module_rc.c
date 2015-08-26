@@ -285,33 +285,59 @@ static int do_readFifoInput(RCInput* _rc)
     }
     else if (strncmp(parseAt, "volcoeff ", strlen("volcoeff ")) == 0)
     {
-      //int hue, hueTol, sat, satTol, val, valTol, inParam;
-      int volCoeff; 					// Input parameter (volume coefficient (%))
+      unsigned int input_param1; 					// Input parameter
       parseAt += strlen("volcoeff ");
 
-      /*
-      if ((sscanf(parseAt, "%d %d %d %d %d %d", &hue, &hueTol, &sat, &satTol, &val, &valTol)) != 6)
-        fprintf(stderr, "Cannot parse hsv command, args '%s'\n", parseAt);
+      if ((sscanf(parseAt, "%d", &input_param1)) != 1)
+        fprintf(stderr, "Cannot parse volCoeff command, args '%s'\n", parseAt);
       else
       {
-        _rc->m_targetDetectHue          = hue;
-        _rc->m_targetDetectHueTolerance = hueTol;
-        _rc->m_targetDetectSat          = sat;
-        _rc->m_targetDetectSatTolerance = satTol;
-        _rc->m_targetDetectVal          = val;
-        _rc->m_targetDetectValTolerance = valTol;
+        _rc->m_volumeCoefficient 	    = input_param1;
         _rc->m_targetDetectParamsUpdated = true;
+        fprintf(stderr, "volCoeff = %d\n", input_param1);
       }
-      */
-      if ((sscanf(parseAt, "%d", &volCoeff)) != 1)
-        fprintf(stderr, "Cannot parse volcoeff command, args '%s'\n", parseAt);
-      else
-      {
-        _rc->m_volumeCoefficient     		    = volCoeff;
-        _rc->m_targetDetectParamsUpdated = true;
-        //fprintf(stderr, "volCoeff = %d\n", volCoeff);
-      }
+    }
+    else if (strncmp(parseAt, "micdist ", strlen("micdist ")) == 0)
+    {
+      unsigned int input_param1; 					// Input parameter
+      parseAt += strlen("micdist ");
 
+      if ((sscanf(parseAt, "%d", &input_param1)) != 1)
+        fprintf(stderr, "Cannot parse micDist command, args '%s'\n", parseAt);
+      else
+      {
+        _rc->m_micDistance	    = input_param1;
+        _rc->m_targetDetectParamsUpdated = true;
+        fprintf(stderr, "micDist = %d\n", input_param1);
+      }
+    }
+    else if (strncmp(parseAt, "winsize ", strlen("winsize ")) == 0)
+    {
+      unsigned int input_param1; 					// Input parameter
+      parseAt += strlen("winsize ");
+
+      if ((sscanf(parseAt, "%d", &input_param1)) != 1)
+        fprintf(stderr, "Cannot parse winSize command, args '%s'\n", parseAt);
+      else
+      {
+        _rc->m_windowSize	    = input_param1;
+        _rc->m_targetDetectParamsUpdated = true;
+        fprintf(stderr, "winSize = %d\n", input_param1);
+      }
+    }
+    else if (strncmp(parseAt, "numsamples ", strlen("numsamples ")) == 0)
+    {
+      unsigned int input_param1; 					// Input parameter
+      parseAt += strlen("numsamples ");
+
+      if ((sscanf(parseAt, "%d", &input_param1)) != 1)
+        fprintf(stderr, "Cannot parse numSamples command, args '%s'\n", parseAt);
+      else
+      {
+        _rc->m_numSamples	    = input_param1;
+        _rc->m_targetDetectParamsUpdated = true;
+        fprintf(stderr, "numSamples = %d\n", input_param1);
+      }
     }
     else if (strncmp(parseAt, "video_out ", strlen("video_out ")) == 0)
     {
@@ -443,17 +469,10 @@ int rcInputGetTargetDetectParams(RCInput* _rc,
     return ENODATA;
 
   _rc->m_targetDetectParamsUpdated = false;
-/*
-  _targetDetectParams->m_detectHue          = _rc->m_targetDetectHue;
-  _targetDetectParams->m_detectHueTolerance = _rc->m_targetDetectHueTolerance;
-  _targetDetectParams->m_detectSat          = _rc->m_targetDetectSat;
-  _targetDetectParams->m_detectSatTolerance = _rc->m_targetDetectSatTolerance;
-  _targetDetectParams->m_detectVal          = _rc->m_targetDetectVal;
-  _targetDetectParams->m_detectValTolerance = _rc->m_targetDetectValTolerance;
-*/
-  _targetDetectParams->m_volumeCoefficient 				= _rc->m_volumeCoefficient;
-  //fprintf(stderr, "volCoeff3 = %d\n", _targetDetectParams->m_volumeCoefficient);
-  //fprintf(stderr, "volCoeff4 = %d\n", _rc->m_volumeCoefficient);
+  _targetDetectParams->m_volumeCoefficient			= _rc->m_volumeCoefficient;
+  _targetDetectParams->m_micDistance 				= _rc->m_micDistance;
+  _targetDetectParams->m_windowSize 				= _rc->m_windowSize;
+  _targetDetectParams->m_numSamples 				= _rc->m_numSamples;
 
   return 0;
 }

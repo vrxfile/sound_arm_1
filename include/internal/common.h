@@ -20,15 +20,10 @@ typedef struct ImageDescription
 
 typedef struct TargetDetectParams
 {
-	int m_volumeCoefficient;
-	/*
-	int m_detectHue;
-	int m_detectHueTolerance;
-	int m_detectSat;
-	int m_detectSatTolerance;
-	int m_detectVal;
-	int m_detectValTolerance;
-	*/
+	unsigned int m_volumeCoefficient;
+	unsigned int m_micDistance;
+	unsigned int m_windowSize;
+	unsigned int m_numSamples;
 } TargetDetectParams;
 
 typedef struct TargetDetectCommand
@@ -41,11 +36,6 @@ typedef struct TargetLocation
 	int m_targetAngle;
 	unsigned int m_targetLeftVolume;
 	unsigned int m_targetRightVolume;
-	/*
-	int m_targetX;
-	int m_targetY;
-	int m_targetSize;
-	*/
 } TargetLocation;
 
 
