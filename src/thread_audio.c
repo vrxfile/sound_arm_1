@@ -210,13 +210,16 @@ static int threadAudioSelectLoop(Runtime* _runtime, CodecEngine* _ce, FBOutput* 
   size_t frameDstUsed = frameDstSize;
   frameSrcSize = FrameSourceSize;
 
+
   if (targetDetectParams.m_numSamples <= FrameSourceSize)
   {
-	  n_read_count = targetDetectParams.m_numSamples / (SND_BUF_SIZE * nchan * 2);
+	  //n_read_count = targetDetectParams.m_numSamples / (SND_BUF_SIZE * nchan * 2);
+	  n_read_count = targetDetectParams.m_numSamples / SND_BUF_SIZE;
   }
   else
   {
-	  n_read_count = FrameSourceSize / (SND_BUF_SIZE * nchan * 2);
+	  //n_read_count = FrameSourceSize / (SND_BUF_SIZE * nchan * 2);
+	  n_read_count = FrameSourceSize / SND_BUF_SIZE;
   }
 
   // This is a buffer to send to DSP
